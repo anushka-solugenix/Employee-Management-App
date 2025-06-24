@@ -1,0 +1,15 @@
+<div class="loginpage">
+  <h1 align="center" class="login-heading">LOGIN !</h1>
+<div class="login-page">
+  <label>Username</label><br/>
+  <input type="text" [(ngModel)]="username" placeholder="Enter username"/><br/><br/>
+  
+  <label>Password</label><br/>
+  <input type="password" [(ngModel)]="password" placeholder="Enter password"/><br/><br/>
+  
+  <p align="center" style="color:red">{{ error }}</p><br/>
+  
+  <button (click)="login()">Login</button><br/>
+  <p><a routerLink="/register">Click here to register</a></p>
+</div>
+</div>

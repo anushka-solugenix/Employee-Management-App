@@ -1,0 +1,29 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    background-color:teal;
+    margin: -8px;
+    padding: 15px;
+}
+
+.nav h1{
+    margin: 0;
+    font-size: 40px;
+}
+
+nav {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+nav li{
+    margin: 15px;
+}
+
+nav li a{
+    text-decoration: none;
+    margin: 0;
+    font-size: large;
+}

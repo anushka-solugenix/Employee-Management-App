@@ -1,0 +1,43 @@
+<div class="emp-table">
+  <h1 align="center">EMPLOYEE DETAILS</h1>
+  <table align="center" border="2px solid black">
+    <colgroup>
+      <col style="width: 20%;">
+      <col style="width: 15%;">
+      <col style="width: 15%;">
+      <col style="width: 25%;">
+      <col style="width: 20%;">
+      <col style="width: 15%;">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Joining Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>{{ emp._id  }}</td>
+        <td>{{ emp.firstname }}</td>
+        <td>{{ emp.lastname }}</td>
+        <td>
+        <ng-container *ngIf="!emp.editingEmail; else editEmail">
+          {{ emp.email }}
+          <button class="edit" (click)="emp.editingEmail = true">Edit</button>
+        </ng-container>
+        <ng-template #editEmail>
+          <input [(ngModel)]="emp.email" (blur)="updateEmail(emp)" (keyup.enter)="updateEmail(emp)" autofocus />
+        </ng-template>
+        </td>
+        <td>{{ emp.joiningDate }}</td>
+        <td>
+          <button (click)="deleteEmployee(emp._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

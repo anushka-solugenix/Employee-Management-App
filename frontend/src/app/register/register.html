@@ -1,0 +1,86 @@
+<div class="home-content">
+  <section class="form-container">
+    <form action="#" class="form" (ngSubmit)="onRegistration(regform)" #regform="ngForm">
+      <h3>Personal Details</h3>
+
+      <div class="column">
+        <div class="input-box">
+          <input type="text" placeholder="First Name" name="firstname" ngModel required />
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="Last Name" name="lastname" ngModel required />
+        </div>
+      </div>
+
+      <div class="input-email">
+        <input type="text" placeholder="Email" name="email" ngModel required />
+      </div>
+
+      <div class="column">
+        <div class="input-box">
+          <input type="number" placeholder="Phone Number" name="phno" ngModel required />
+        </div>
+        <div class="input-box">
+          <input type="date" placeholder="Date of Birth" name="dob" ngModel required />
+        </div>
+      </div>
+
+      <div class="gender-box">
+        <h3>Gender</h3>
+        <div class="gender-option">
+          <div class="gender">
+            <input type="radio" id="check-male" name="gender" value="male" ngModel required />
+            <label for="check-male">male</label>
+          </div>
+          <div class="gender">
+            <input type="radio" id="check-female" name="gender" value="female" ngModel />
+            <label for="check-female">female</label>
+          </div>
+          <div class="gender">
+            <input type="radio" id="check-other" name="gender" value="other" ngModel />
+            <label for="check-other">prefer not to say</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-address">
+        <label>Address</label>
+        <input type="text" placeholder="Street address" name="street1" ngModel />
+        <input type="text" placeholder="Street address line 2" name="street2" ngModel />
+
+        <div class="column">
+          <div class="select-box">
+            <select name="city" ngModel required>
+              <option value="" disabled selected>Select City</option>
+              <option>Bengaluru</option>
+              <option>Mumbai</option>
+              <option>Chennai</option>
+              <option>Delhi</option>
+              <option>Hyderabad</option>
+              <option>Indore</option>
+            </select>
+          </div>
+            <input type="text" placeholder="State" name="state" ngModel />
+          </div>
+      </div>
+
+          <div class="column">
+            <div class="input-pswd">
+              <input type="password" placeholder="Password" name="password" ngModel required #pass="ngModel" />
+            </div>
+            <div class="input-pswd">
+              <input type="password" placeholder="Retype Password" name="confirmPassword" ngModel required #conf="ngModel" />
+            </div>
+          </div>
+
+          <div *ngIf="regform.controls?.['password']?.value !== regform.controls?.['confirmPassword']?.value && regform.submitted" style="color:red; text-align:center">
+            Passwords do not match
+          </div>
+
+      <input type="submit" value="Submit" class="submit-btn" [disabled]="!regform.valid" />
+        <p align="center">Already registered?
+          <a routerLink="/login">Login here</a>
+        </p>
+    </form>
+  </section>
+</div>

@@ -1,0 +1,22 @@
+.emp-table table {
+  table-layout: fixed;
+  width: 95%;
+  border-collapse: collapse;
+}
+
+.emp-table th, .emp-table td {
+  text-align: center;
+  overflow: visible;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+button {
+  box-sizing: border-box;
+  min-width: 60px;
+  padding: 4px 10px;
+}
+.edit{
+  margin-left: 1rem;
+}

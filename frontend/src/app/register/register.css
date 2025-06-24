@@ -1,0 +1,87 @@
+.form-container{
+    width: 30rem;
+    margin-left: 10rem;
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border: 2px solid black;
+    background-color: beige;
+}
+
+.form-container header{
+    font-size: medium;
+    margin-bottom: 0.5rem;
+}
+
+.column {
+    display: flex;
+}
+
+.input-box {
+    margin: 0.5rem;
+}
+
+.input-box input {
+    width: 12.5rem;
+    height: 2rem;
+}
+
+.input-email {
+    margin: 0.5rem;
+}
+
+.input-pswd{
+    margin: 0.7rem;
+}
+
+.input-pswd input{
+    width: 13rem;
+    height: 2rem;
+}
+
+.input-email input {
+    width: 26.5rem;
+    height: 2rem;
+}
+
+select {
+    margin-left: 0.4rem;
+    margin-top: 0.3rem;
+    height: 2.25rem;
+    width: 12.5rem;
+}
+
+.gender-option {
+    display: flex;
+}
+
+.gender-option .gender {
+    margin-left: 1rem;
+}
+
+.input-address{
+    margin:0.5rem;
+}
+
+.input-address input{
+    margin: 0.5rem;
+    height: 2rem;
+    width: 27.5rem;
+}
+
+.submit-btn {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: medium;
+    margin-left: 9rem;
+}
+
+.home-content {
+    font-size: larger;
+    display: inline-flex;
+    margin-left: 20rem;
+}
+
+.home-content h1{
+    margin-top: 1rem;
+    margin-right: 5rem;
+}
