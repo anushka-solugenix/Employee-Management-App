@@ -1,0 +1,18 @@
+<div class="popup-container" *ngIf="employee">
+    <h1>Profile Overview: {{employee.firstname }} {{employee.lastname }}</h1>
+    <a (click)="showPopup = true">
+        <img [src]="'assets/'+employee.firstname+employee._id+'.jpg'" alt="Employee Image" class="profile-img" />
+    </a>
+
+    <div class="image-popup" *ngIf="showPopup" (click)="showPopup = false">
+        <img [src]="'assets/' + employee.firstname + employee._id + '.jpg'" class="popup-img" />
+    </div>
+
+    <p><strong>Email: </strong>{{ employee.email }}</p>
+    <p><strong>Phone: </strong>{{ employee.phno }}</p>
+    <p><strong>DOB: </strong>{{ employee.dob }}</p>
+    <p><strong>Gender: </strong>{{ employee.gender }}</p>
+    <p><strong>Address: </strong><br/>{{ employee.street1 }},{{ employee.street2 }},<br/>{{ employee.city }},<br/>{{ employee.state }}</p>
+    <p><strong>Joining Date: </strong>{{ employee.joiningDate | date }}</p>
+    <button (click)="back()">Go Back</button>
+</div>

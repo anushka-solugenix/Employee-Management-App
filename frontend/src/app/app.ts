@@ -16,14 +16,12 @@ import { Navbar } from "./navbar/navbar";
 export class App implements OnInit {
   isAuthPage: boolean = false;
 
-  constructor(private router: Router) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      const currentUrl = event.urlAfterRedirects;
-      this.isAuthPage = currentUrl === '/login' || currentUrl === '/register';
-    });
+  shouldShowNavbar(): boolean {
+    const hiddenRoutes = ['/login', '/register', '/popup'];
+    return !hiddenRoutes.some(route => this.router.url.startsWith(route));
   }
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.router.events.pipe(

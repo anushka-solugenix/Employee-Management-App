@@ -1,0 +1,40 @@
+.popup-container {
+    display: block;
+    margin-top: 2.5rem;
+    margin-left: 1rem;
+}
+
+p{
+    font-size: large;
+}
+
+img{
+    width: 7.5rem;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.image-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-img {
+  width: 27.5vw;  
+  height: auto;
+  max-height: 80vh; 
+  border: 4px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}

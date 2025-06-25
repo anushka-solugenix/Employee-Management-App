@@ -27,3 +27,11 @@ nav li a{
     margin: 0;
     font-size: large;
 }
+
+button {
+    width: 4rem;
+    height: 2rem;
+    margin-top: 0.6rem;
+    background-color:beige;
+    border: none;
+}
