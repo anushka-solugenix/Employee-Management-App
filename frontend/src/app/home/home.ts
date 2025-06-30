@@ -16,7 +16,7 @@ export class Home implements OnInit {
   nextId = 1;
   selectedSortKey: string = '';
   currentPage = 1;
-  pageSize = 5; 
+  pageSize = 8; 
   totalPages = 0;
 
 
