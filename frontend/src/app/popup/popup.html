@@ -1,18 +1,40 @@
 <div class="popup-container" *ngIf="employee">
-    <h1>Profile Overview: {{employee.firstname }} {{employee.lastname }}</h1>
-    <a (click)="showPopup = true">
-        <img [src]="'assets/'+employee.firstname+employee._id+'.jpg'" alt="Employee Image" class="profile-img" />
-    </a>
+  <h1>Profile Overview: {{ employee.firstname }} {{ employee.lastname }}</h1>
 
-    <div class="image-popup" *ngIf="showPopup" (click)="showPopup = false">
-        <img [src]="'assets/' + employee.firstname + employee._id + '.jpg'" class="popup-img" />
-    </div>
+  <a (click)="showPopup = true">
+    <ng-container *ngIf="employee.userimage; else defaultIcon">
+      <img
+        [src]="'http://localhost:3000/uploads/' + employee.userimage"
+        alt="Profile Image"
+      />
+    </ng-container>
+    <ng-template #defaultIcon>
+      <i class="fas fa-user-circle fa-7x" style="color: #888;"></i>
+    </ng-template>
+  </a>
 
-    <p><strong>Email: </strong>{{ employee.email }}</p>
-    <p><strong>Phone: </strong>{{ employee.phno }}</p>
-    <p><strong>DOB: </strong>{{ employee.dob }}</p>
-    <p><strong>Gender: </strong>{{ employee.gender }}</p>
-    <p><strong>Address: </strong><br/>{{ employee.street1 }},{{ employee.street2 }},<br/>{{ employee.city }},<br/>{{ employee.state }}</p>
-    <p><strong>Joining Date: </strong>{{ employee.joiningDate | date }}</p>
-    <button (click)="back()">Go Back</button>
+  <div class="image-popup" *ngIf="showPopup" (click)="showPopup = false">
+    <ng-container *ngIf="employee.userimage && employee.userimage !== ''; else popupDefault">
+      <img
+        [src]="'http://localhost:3000/uploads/' + employee.userimage"
+        class="popup-img"
+      />
+    </ng-container>
+    <ng-template #popupDefault>
+      <i class="fas fa-user-circle fa-7x popup-img" style="color: white;"></i>
+    </ng-template>
+  </div>
+
+  <p><strong>Email:</strong> {{ employee.email }}</p>
+  <p><strong>Phone:</strong> {{ employee.phno }}</p>
+  <p><strong>DOB:</strong> {{ employee.dob }}</p>
+  <p><strong>Gender:</strong> {{ employee.gender }}</p>
+  <p><strong>Address:</strong><br />
+    {{ employee.street1 }}, {{ employee.street2 }},<br />
+    {{ employee.city }}, <br />
+    {{ employee.state }}
+  </p>
+  <p><strong>Joining Date:</strong> {{ employee.joiningDate | date }}</p>
+
+  <button (click)="back()">Go Back</button>
 </div>

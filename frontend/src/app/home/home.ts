@@ -14,13 +14,36 @@ import { RouterLink } from '@angular/router';
 export class Home implements OnInit {
   employees: Employee[] = [];
   nextId = 1;
+  selectedSortKey: string = '';
+  currentPage = 1;
+  pageSize = 5; 
+  totalPages = 0;
+
 
   constructor(private employeeService: EmployeeService) {}
 
-  ngOnInit() {
-    this.fetchEmployees();
-    console.log('Sending token:', localStorage.getItem('token'));
-  }
+ngOnInit() {
+  this.loadEmployees();
+}
+
+loadEmployees(): void {
+  this.employeeService.getEmployeesPage(this.currentPage, this.pageSize, this.selectedSortKey)
+    .subscribe({
+      next: (res: { employees: Employee[], total: number, page: number, totalPages: number }) => {
+        this.employees = res.employees.map(emp => ({
+          ...emp,
+          joiningDate: new Date(emp.joiningDate).toLocaleDateString()
+        }));
+        this.totalPages = res.totalPages;
+      },
+      error: (err) => console.error('Error loading employees:', err)
+    });
+}
+
+sortEmployees(): void {
+  this.currentPage = 1;
+  this.loadEmployees();
+}
 
 fetchEmployees() {
   this.employeeService.getEmployees().subscribe({
@@ -38,26 +61,19 @@ fetchEmployees() {
   });
 }
 
-updateEmail(emp: Employee) {
-  if (!emp._id || !emp.email) return;
-
-  this.employeeService.updateEmployeeEmail(emp._id, emp.email).subscribe({
-    next: () => {
-      emp.editingEmail = false;
-      this.fetchEmployees();  
-    },
-    error: (err) => console.error('Error updating email:', err)
+deleteEmployee(id: string | undefined): void {
+  if (!id) return;
+  this.employeeService.deleteEmployee(id).subscribe({
+    next: () => this.loadEmployees(),
+    error: (err) => console.error('Error deleting employee:', err)
   });
 }
 
 
-deleteEmployee(id: string | undefined) {
-  if (!id) return; 
-
-  this.employeeService.deleteEmployee(id).subscribe({
-    next: () => this.fetchEmployees(),
-    error: (err) => console.error('Error deleting employee:', err)
-  });
+goToPage(page: number): void {
+  if (page < 1 || page > this.totalPages) return;
+  this.currentPage = page;
+  this.loadEmployees();
 }
 
 }

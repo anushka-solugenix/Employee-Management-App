@@ -17,7 +17,7 @@ export class App implements OnInit {
   isAuthPage: boolean = false;
 
   shouldShowNavbar(): boolean {
-    const hiddenRoutes = ['/login', '/register', '/popup'];
+    const hiddenRoutes = ['/login', '/register', '/popup', '/forgot-pswd'];
     return !hiddenRoutes.some(route => this.router.url.startsWith(route));
   }
 

@@ -31,7 +31,11 @@ const employeeSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false
-  }
+  },
+  userimage: {
+  type: String,
+  default: ''
+}
 });
 
 module.exports = mongoose.model('Employee', employeeSchema);

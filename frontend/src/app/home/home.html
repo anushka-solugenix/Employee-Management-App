@@ -1,5 +1,19 @@
 <div class="emp-table">
-  <h1 align="center">EMPLOYEE DETAILS</h1>
+  <div class="flex">
+      <h1 align="center">EMPLOYEE DETAILS</h1>
+      <div class="sort-section">
+      <p>Sort By:</p>
+      <select [(ngModel)]="selectedSortKey" (change)="sortEmployees()">
+        <option value="">--Select--</option>
+        <option value="_id">ID</option>
+        <option value="firstname">Firstname</option>
+        <option value="lastname">Lastname</option>
+        <option value="email">Email</option>
+        <option value="joiningDate">Joining Date</option>
+      </select>
+    </div>
+  </div>
+
   <table align="center" border="2px solid black">
     <colgroup>
       <col style="width: 20%;">
@@ -26,15 +40,7 @@
         <td>{{ emp._id  }}</td>
         <td>{{ emp.firstname }}</td>
         <td>{{ emp.lastname }}</td>
-        <td>
-        <ng-container *ngIf="!emp.editingEmail; else editEmail">
-          {{ emp.email }}
-          <button class="edit" (click)="emp.editingEmail = true">Edit</button>
-        </ng-container>
-        <ng-template #editEmail>
-          <input [(ngModel)]="emp.email" (blur)="updateEmail(emp)" (keyup.enter)="updateEmail(emp)" autofocus />
-        </ng-template>
-        </td>
+        <td>{{ emp.email }}</td>
         <td>{{ emp.joiningDate }}</td>
         <td>
           <button (click)="deleteEmployee(emp._id)">Delete</button>
@@ -45,4 +51,17 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="pagination">
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+  
+  <button
+    *ngFor="let page of [].constructor(totalPages); let i = index"
+    [class.active]="currentPage === i + 1"
+    (click)="goToPage(i + 1)">
+    {{ i + 1 }}
+  </button>
+  
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</div>
 </div>

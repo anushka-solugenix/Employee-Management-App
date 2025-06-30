@@ -4,12 +4,24 @@
   border-collapse: collapse;
 }
 
+table thead tr th{
+  background-color:#cbcbcb;
+}
+
 .emp-table th, .emp-table td {
   text-align: center;
   overflow: visible;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 10px;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #cbcbcb; 
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: white; 
 }
 
 button {
@@ -19,4 +31,38 @@ button {
 }
 .edit{
   margin-left: 1rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 2rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.emp-table h1 {
+  flex: 1;
+  text-align: center;
+  margin: 0; 
+}
+
+.sort-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination{
+  margin-left: 76rem;
+}
+
+.pagination button {
+  margin: 2px;
+}
+.pagination button.active {
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
 }

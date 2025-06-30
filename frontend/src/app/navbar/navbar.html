@@ -1,7 +1,13 @@
 <div class="nav">
-    <h1>Employee Management App</h1>
-    <nav>
-        <li><a routerLink="home">Home</a></li>
-        <button (click)="logout()">Logout</button>
-    </nav>
+  <h1>Employee Management App</h1>
+  <nav>
+    <li><a routerLink="home">Home</a></li>
+    <div class="dropdown">
+      <a class="dropbtn">Hi, {{employee.firstname }}</a>
+      <div class="dropdown-content">
+        <a (click)="goToProfile()">My Profile</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </nav>
 </div>

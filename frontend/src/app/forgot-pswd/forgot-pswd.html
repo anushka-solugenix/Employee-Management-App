@@ -1,0 +1,16 @@
+<div class="password-page">
+  <label>Email</label><br />
+  <input type="text" [(ngModel)]="email" placeholder="Enter email" /><br /><br />
+
+  <label>New Password</label><br/>
+  <input
+    type="password" placeholder="New Password" [(ngModel)]="newPassword" required /><br/><br/>
+
+  <label>Confirm Password</label><br />
+  <input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required /><br/><br/>
+
+  <button (click)="validatePasswords()">Submit</button>
+
+  <div *ngIf="errorMessage" style="color: red">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" style="color: green">{{ successMessage }}</div>
+</div>

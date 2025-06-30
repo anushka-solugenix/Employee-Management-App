@@ -36,34 +36,80 @@ export class EmployeeService {
   };
 }
 
-  getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl, this.getAuthHeaders());
+  getEmployees(sortBy: string = '', sortOrder: string = 'asc') {
+    let url = 'http://localhost:3000/api/employees';
+    if (sortBy) {
+      url += `?sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    }
+    return this.http.get<Employee[]>(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`
+      }
+    });
   }
 
-  registerEmployee(employee: Employee): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, employee, this.getAuthHeaders());
-  }
+getEmployeeById(id: string) {
+  return this.http.get<any>(
+    `http://localhost:3000/api/employees/${id}`,
+    this.getAuthHeaders()
+  );
+}
 
-  updateEmployeeEmail(id: string, email: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, { email }, this.getAuthHeaders());
-  }
+registerEmployee(employee: Employee): Observable<any> {
+  return this.http.post(`${this.apiUrl}/register`, employee, this.getAuthHeaders());
+}
+
+updateEmployeeEmail(id: string, email: string): Observable<any> {
+  return this.http.put(`${this.apiUrl}/${id}`, { email }, this.getAuthHeaders());
+}
+
+updateEmployee(id: string, employee: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}/${id}`, employee, this.getAuthHeaders());
+}
 
 deleteEmployee(id: string): Observable<any> {
   return this.http.delete(`${this.apiUrl}/${id}`, this.getAuthHeaders());
   
 }
 
-  refreshAccessToken() {
-    const refreshToken = localStorage.getItem('refreshToken');
-    return this.http.post<{ accessToken: string }>('http://localhost:3000/api/auth/token', {
-      token: refreshToken
-    }).subscribe({
-      next: res => localStorage.setItem('token', res.accessToken),
-      error: err => {
-        alert('Session expired. Please login again.');
-        localStorage.clear();
-        window.location.href = '/login';
-      }
-    });
+uploadUserImage(id: string, formData: FormData) {
+  return this.http.post(
+    `http://localhost:3000/api/employees/${id}/uploads`,
+    formData,
+    this.getAuthHeaders()
+  );
+}
+
+
+refreshAccessToken() {
+  const refreshToken = localStorage.getItem('refreshToken');
+  return this.http.post<{ accessToken: string }>('http://localhost:3000/api/auth/token', {
+    token: refreshToken
+  }).subscribe({
+    next: res => localStorage.setItem('token', res.accessToken),
+    error: err => {
+      alert('Session expired. Please login again.');
+      localStorage.clear();
+      window.location.href = '/login';
+    }
+  });
+}
+
+resetPassword(email: string, newPassword: string) {
+return this.http.post<{ message: string, error?: string }>(
+  'http://localhost:3000/api/employees/forgot-password',
+  { email, newPassword });
+}
+
+getEmployeesPage(page: number, limit: number, sortBy: string = '', sortOrder: string = 'asc') {
+  let url = `http://localhost:3000/api/employees?page=${page}&limit=${limit}`;
+  if (sortBy) {
+    url += `&sortBy=${sortBy}&sortOrder=${sortOrder}`;
   }
+  return this.http.get<any>(
+    url,
+    { headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` } }
+  );
+}
+
 }

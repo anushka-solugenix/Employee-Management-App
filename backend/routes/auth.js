@@ -107,7 +107,7 @@ router.post('/login', async (req, res) => {
     const accessToken = jwt.sign(
       accessTokenPayload,
       ACCESS_TOKEN_SECRET,
-      { expiresIn: '15m' }
+      { expiresIn: '30m' }
     );
 
     await Employee.updateOne({ _id: user._id }, { $set: { access_token: accessToken } });

@@ -1,0 +1,74 @@
+<div class="profile-container">
+  <h2>
+    <i class="fas fa-user-circle" style="margin-right: 8px;"></i>
+    My Profile
+  </h2>
+  <br />
+  <div class="profile-card">
+    <div class="profile-header">
+      <a (click)="showPopup = true">
+        <ng-container *ngIf="employee.userimage && employee.userimage !== ''; else defaultIcon">
+          <img
+            [src]="'http://localhost:3000/uploads/' + employee.userimage"
+            class="profile-image" />
+        </ng-container>
+        <ng-template #defaultIcon>
+          <i class="fas fa-user-circle fa-7x" style="color: #888;"></i>
+        </ng-template>
+      </a>
+    </div>
+
+    <div class="image-popup" *ngIf="showPopup" (click)="showPopup = false">
+      <img
+        [src]="'http://localhost:3000/uploads/' + employee.userimage"
+        class="popup-img" />
+    </div>
+
+    <form (submit)="uploadImage()" enctype="multipart/form-data" align="center">
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </form>
+
+    <div class="profile-info">
+      <div class="info-row">
+        <strong>First Name:</strong>
+        <span *ngIf="!isEditing">{{ employee.firstname }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.firstname" name="firstname" />
+      </div>
+      <div class="info-row">
+        <strong>Last Name:</strong>
+        <span *ngIf="!isEditing">{{ employee.lastname }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.lastname" name="lastname" />
+      </div>
+      <div class="info-row">
+        <strong>Email:</strong>
+        <span *ngIf="!isEditing">{{ employee.email }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.email" name="email" />
+      </div>
+      <div class="info-row">
+        <strong>Gender:</strong>
+        <span *ngIf="!isEditing">{{ employee.gender }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.gender" name="gender" />
+      </div>
+      <div class="info-row">
+        <strong>DOB:</strong>
+        <span *ngIf="!isEditing">{{ employee.dob }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.dob" name="dob" />
+      </div>
+      <div class="info-row">
+        <strong>Phone:</strong>
+        <span *ngIf="!isEditing">{{ employee.phno }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.phno" name="phno" />
+      </div>
+      <div class="info-row">
+        <strong>Joining Date:</strong>
+        <span *ngIf="!isEditing">{{ employee.joiningDate }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="employee.joiningDate" name="joiningDate" />
+      </div>
+    </div>
+
+    <div align="center" style="margin-top: 10px;">
+      <button *ngIf="!isEditing" (click)="setEditMode()">Edit Profile</button>
+      <button *ngIf="isEditing" (click)="saveAll()">Save Changes</button>
+    </div>
+  </div>
+</div>
