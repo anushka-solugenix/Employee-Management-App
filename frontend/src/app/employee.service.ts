@@ -36,17 +36,16 @@ export class EmployeeService {
   };
 }
 
-  getEmployees(sortBy: string = '', sortOrder: string = 'asc') {
-    let url = 'http://localhost:3000/api/employees';
-    if (sortBy) {
-      url += `?sortBy=${sortBy}&sortOrder=${sortOrder}`;
-    }
-    return this.http.get<Employee[]>(url, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token') || ''}`
-      }
-    });
-  }
+getEmployees(page: number = 1, sortBy: string = '_id', sortOrder: string = 'desc') {
+  return this.http.get<{
+    employees: Employee[];
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+  }>(`/api/employees?page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
+}
+
 
 getEmployeeById(id: string) {
   return this.http.get<any>(
@@ -101,14 +100,25 @@ return this.http.post<{ message: string, error?: string }>(
   { email, newPassword });
 }
 
-getEmployeesPage(page: number, limit: number, sortBy: string = '', sortOrder: string = 'asc') {
-  let url = `http://localhost:3000/api/employees?page=${page}&limit=${limit}`;
-  if (sortBy) {
-    url += `&sortBy=${sortBy}&sortOrder=${sortOrder}`;
-  }
-  return this.http.get<any>(
-    url,
-    { headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` } }
+getEmployeesPage(
+  page: number,
+  sortBy: string,
+  sortOrder: string
+): Observable<{
+  employees: Employee[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}> {
+  return this.http.get<{
+    employees: Employee[];
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+  }>(
+    `http://localhost:3000/api/employees?page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`
   );
 }
 

@@ -1,0 +1,16 @@
+<ag-grid-angular
+  style="width: 100%; height: 387px;"
+  class="ag-theme-alpine"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [rowData]="rowData">
+</ag-grid-angular>
+
+<div class="pagination" *ngIf="totalPages.length">
+  <button
+    *ngFor="let page of totalPages"
+    (click)="goToPage(page)"
+    [class.active]="page === currentPage">
+    {{ page }}
+  </button>
+</div>

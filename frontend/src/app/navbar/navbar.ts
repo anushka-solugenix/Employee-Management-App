@@ -27,6 +27,7 @@ export class Navbar implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
+    console.log('Token:', token);
     if (!token) {
       console.log('User is not logged in (no token).');
       return;

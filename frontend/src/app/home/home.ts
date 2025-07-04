@@ -6,80 +6,75 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-   standalone: true,
-  imports:[CommonModule,FormsModule,RouterLink],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './home.html',
-  styleUrls: ['./home.css']
+  styleUrls: ['./home.css'],
 })
 export class Home implements OnInit {
   employees: Employee[] = [];
   nextId = 1;
-  selectedSortKey: string = '';
+  selectedSortKey: string = '_id'; // Default sort key
+  selectedSortOrder: string = 'desc'; // Default sort order
   currentPage = 1;
-  pageSize = 8; 
+  pageSize = 0;
   totalPages = 0;
-
 
   constructor(private employeeService: EmployeeService) {}
 
-ngOnInit() {
-  this.loadEmployees();
-}
+  ngOnInit() {
+    this.loadEmployees();
+  }
 
-loadEmployees(): void {
-  this.employeeService.getEmployeesPage(this.currentPage, this.pageSize, this.selectedSortKey)
-    .subscribe({
-      next: (res: { employees: Employee[], total: number, page: number, totalPages: number }) => {
-        this.employees = res.employees.map(emp => ({
-          ...emp,
-          joiningDate: new Date(emp.joiningDate).toLocaleDateString()
-        }));
-        this.totalPages = res.totalPages;
-      },
-      error: (err) => console.error('Error loading employees:', err)
-    });
-}
+  loadEmployees(): void {
+    this.employeeService
+      .getEmployeesPage(
+        this.currentPage,
+        this.selectedSortKey,
+        this.selectedSortOrder
+      )
+      .subscribe({
+        next: (res: {
+          employees: Employee[];
+          total: number;
+          page: number;
+          totalPages: number;
+          pageSize: number;
+        }) => {
+          this.employees = res.employees.map((emp) => ({
+            ...emp,
+            joiningDate: new Date(emp.joiningDate).toLocaleDateString(),
+          }));
+          this.pageSize = res.pageSize;
+          this.totalPages = res.totalPages;
+        },
+        error: (err) => console.error('Error loading employees:', err),
+      });
+  }
 
 sortEmployees(): void {
   this.currentPage = 1;
   this.loadEmployees();
 }
 
-fetchEmployees() {
-  this.employeeService.getEmployees().subscribe({
-    next: (data) => {
-      this.employees = data.map(emp => ({
-        _id: emp._id,  
-        firstname: emp.firstname,
-        lastname: emp.lastname,
-        email: emp.email,
-        joiningDate: new Date(emp.joiningDate).toLocaleDateString(),
-        editingEmail: false
-      }));
-    },
-    error: (err) => console.error('Error fetching employees:', err)
-  });
-}
 
-deleteEmployee(id: string | undefined): void {
-  if (!id) return;
-  this.employeeService.deleteEmployee(id).subscribe({
-    next: () => this.loadEmployees(),
-    error: (err) => console.error('Error deleting employee:', err)
-  });
-}
+  deleteEmployee(id: string | undefined): void {
+    if (!id) return;
+    this.employeeService.deleteEmployee(id).subscribe({
+      next: () => this.loadEmployees(),
+      error: (err) => console.error('Error deleting employee:', err),
+    });
+  }
 
-
-goToPage(page: number): void {
-  if (page < 1 || page > this.totalPages) return;
-  this.currentPage = page;
-  this.loadEmployees();
-}
-
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.loadEmployees();
+  }
 }
 
 export interface Employee {
-  _id: string; 
+  _id: string;
   firstname: string;
   lastname: string;
   email: string;

@@ -9,31 +9,34 @@ const bcrypt = require('bcryptjs');
 router.get('/', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
-    const skip = (page - 1) * limit;
-
     const sortBy = req.query.sortBy || '_id';
     const sortOrder = req.query.sortOrder === 'asc' ? 1 : -1;
 
-    const total = await Employee.countDocuments();
+    const pageSize = 8; 
+
+    const totalEmployees = await Employee.countDocuments();
+    const totalPages = Math.ceil(totalEmployees / pageSize);
+    const skip = (page - 1) * pageSize;
 
     const employees = await Employee.find()
-      .select('-password -access_token')
       .sort({ [sortBy]: sortOrder })
       .skip(skip)
-      .limit(limit);
+      .limit(pageSize);
 
     res.json({
       employees,
-      total,
+      total: totalEmployees,
       page,
-      totalPages: Math.ceil(total / limit)
+      pageSize,          
+      totalPages
     });
-  } catch (error) {
-    console.error('Error fetching employees:', error);
-    res.status(500).json({ error: 'Failed to fetch employees' });
+  } catch (err) {
+    console.error('Error fetching employees:', err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
+
+
 
 router.get('/:id', verifyToken, async (req, res) => {
   try {
