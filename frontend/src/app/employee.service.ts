@@ -19,6 +19,7 @@ export interface Employee {
   joiningDate: string;
   password: string;
   access_token: string;
+  selected: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
