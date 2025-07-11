@@ -1,14 +1,20 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
-import { ColumnApiModule, ModuleRegistry, TextEditorModule } from 'ag-grid-community';
-import { ClientSideRowModelModule, _SharedRowSelectionModule } from 'ag-grid-community';
+
+import {
+  ModuleRegistry,
+  ClientSideRowModelModule,
+  _SharedRowSelectionModule,
+  TextEditorModule,
+  ValidationModule
+} from 'ag-grid-community';
 
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
   _SharedRowSelectionModule,
   TextEditorModule,
-  ColumnApiModule,
+  ValidationModule
 ]);
 
 bootstrapApplication(App, appConfig)

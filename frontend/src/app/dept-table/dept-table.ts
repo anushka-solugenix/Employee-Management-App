@@ -56,6 +56,28 @@ export class DeptTable implements OnInit {
     editable: true
   };
 
+rowSelectionConfig = {
+  type: "multiple",
+  mode: "multiRow",
+  enableClickSelection: false,
+  enableSelectionWithoutCtrlKey: true
+} as const;
+
+onCellValueChanged(event: any): void {
+  const { data, colDef, newValue } = event;
+
+  const field = colDef.field;
+  if (field && data) {
+    (data as any)[field] = newValue;
+  }
+
+  console.log('Updated row:', data);
+}
+
+  getRowHeight = () => {
+    return 45; 
+  };
+
   constructor(private employeeService: EmployeeService) {}
 
   ngOnInit() {
